@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build: ./server
+    container_name: codesync-backend
+
+    ports:
+      - "5001:5001"
+
+    env_file:
+      - ./server/.env
+
+  frontend:
+    build: ./client
+    container_name: codesync-frontend
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - backend

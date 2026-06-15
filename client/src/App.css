@@ -1,0 +1,363 @@
+/* ─── Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg-base:        #0d0d0f;
+  --bg-surface:     #111114;
+  --bg-elevated:    #1a1a22;
+  --bg-hover:       #1e1e28;
+
+  --border:         #1e1e24;
+  --border-subtle:  #161619;
+  --border-focus:   #6366f1;
+
+  --text-primary:   #e2e2e5;
+  --text-secondary: #8b8b9e;
+  --text-muted:     #4a4a5e;
+  --text-disabled:  #2e2e3e;
+
+  --accent:         #6366f1;
+  --accent-dim:     #6366f122;
+  --accent-hover:   #4f46e5;
+  --green:          #4ade80;
+  --green-glow:     #4ade8033;
+  --red:            #f87171;
+  --amber:          #fbbf24;
+
+  --radius-sm:      6px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
+
+  --shadow-sm:      0 2px 8px #00000044;
+  --shadow-md:      0 8px 32px #00000055;
+  --shadow-lg:      0 24px 80px #00000066;
+
+  --font-sans:      'Inter', 'SF Pro Display', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:  100ms;
+  --duration-base:  180ms;
+  --duration-slow:  320ms;
+}
+
+/* ─── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  color: #fff;
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--duration-fast);
+}
+
+a:hover { color: #818cf8; }
+
+/* ─── Scrollbars ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a38;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a50;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a38 transparent;
+}
+
+/* ─── Selection ──────────────────────────────────────────── */
+::selection {
+  background: #6366f144;
+  color: #fff;
+}
+
+/* ─── Focus ──────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Inputs ─────────────────────────────────────────────── */
+input, textarea, select {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 13px;
+  outline: none;
+  transition:
+    border-color var(--duration-base) var(--ease-in-out),
+    box-shadow   var(--duration-base) var(--ease-in-out);
+  width: 100%;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%234a4a5e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: var(--radius-md);
+  transition:
+    opacity         var(--duration-fast),
+    transform       var(--duration-fast),
+    background      var(--duration-base) var(--ease-in-out),
+    box-shadow      var(--duration-base) var(--ease-in-out),
+    border-color    var(--duration-base) var(--ease-in-out);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ─── Utility classes ────────────────────────────────────── */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.badge-accent {
+  background: var(--accent-dim);
+  color: #818cf8;
+  border-color: #6366f133;
+}
+
+.badge-green {
+  background: #4ade8011;
+  color: var(--green);
+  border-color: #4ade8033;
+}
+
+.badge-red {
+  background: #f8717111;
+  color: var(--red);
+  border-color: #f8717133;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes fadeInFast {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.animate-fade-in       { animation: fadeIn      var(--duration-slow) var(--ease-out) both; }
+.animate-fade-in-fast  { animation: fadeInFast  var(--duration-base) var(--ease-out) both; }
+.animate-slide-right   { animation: slideInRight var(--duration-slow) var(--ease-out) both; }
+.animate-pulse         { animation: pulse 2s ease-in-out infinite; }
+.animate-spin          { animation: spin  0.8s linear infinite; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-hover)    50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s var(--ease-in-out) infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── Tooltip ────────────────────────────────────────────── */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1e2e;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 4px 10px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* ─── Online indicator ───────────────────────────────────── */
+.online-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green-glow);
+}
+
+/* ─── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  h1 { font-size: 22px; }
+  h2 { font-size: 18px; }
+
+  .card {
+    padding: 20px;
+    border-radius: var(--radius-lg);
+  }
+}

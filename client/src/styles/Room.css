@@ -1,0 +1,597 @@
+/* ── Room.css ─────────────────────────────────────────────── */
+
+/* Navbar */
+.cs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 48px;
+  background: #111114;
+  border-bottom: 1px solid #1e1e26;
+  flex-shrink: 0;
+  z-index: 20;
+  gap: 12px;
+}
+
+.cs-nav-left,
+.cs-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.cs-nav-right {
+  justify-content: flex-end;
+}
+
+.cs-nav-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.cs-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.cs-logo-mark {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cs-logo-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.cs-nav-sep {
+  width: 1px;
+  height: 16px;
+  background: #222230;
+  flex-shrink: 0;
+}
+
+/* Room ID badge (center) */
+.cs-room-id {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0d0d10;
+  border: 1px solid #1e1e2a;
+  border-radius: 6px;
+  padding: 4px 10px 4px 8px;
+  cursor: pointer;
+  transition: border-color 150ms, background 150ms;
+  max-width: 260px;
+}
+
+.cs-room-id:hover {
+  border-color: #2e2e42;
+  background: #111118;
+}
+
+.cs-room-pip {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 5px #4ade8077;
+  flex-shrink: 0;
+  animation: pipPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pipPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.cs-room-id-label {
+  font-size: 10px;
+  color: #3a3a52;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.cs-room-id-value {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11.5px;
+  color: #7070a0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.cs-copy-icon {
+  font-size: 10px;
+  color: #3a3a52;
+  margin-left: 2px;
+  flex-shrink: 0;
+  transition: color 150ms;
+}
+
+.cs-room-id:hover .cs-copy-icon {
+  color: #6366f1;
+}
+
+/* Language selector */
+.cs-lang-select {
+  background: #17171e;
+  border: 1px solid #22222e;
+  border-radius: 6px;
+  color: #9090b0;
+  font-size: 12px;
+  font-family: inherit;
+  padding: 5px 28px 5px 10px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%233a3a52' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  transition: border-color 150ms, color 150ms;
+  min-width: 110px;
+}
+
+.cs-lang-select:hover {
+  border-color: #2e2e42;
+  color: #c0c0d8;
+}
+
+.cs-lang-select:focus {
+  border-color: #6366f1;
+}
+
+/* Invite button */
+.cs-invite-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #17171e;
+  border: 1px solid #22222e;
+  border-radius: 6px;
+  color: #8080a8;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 150ms, color 150ms, background 150ms;
+  white-space: nowrap;
+}
+
+.cs-invite-btn:hover {
+  border-color: #2e2e42;
+  color: #c0c0d8;
+  background: #1e1e28;
+}
+
+.cs-invite-icon {
+  font-size: 11px;
+}
+
+/* Run button */
+.cs-run-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 7px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.1px;
+  box-shadow: 0 2px 12px #6366f133, inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: opacity 120ms, transform 100ms, box-shadow 150ms;
+  white-space: nowrap;
+}
+
+.cs-run-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 20px #6366f155, inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.cs-run-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.cs-run-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.cs-run-spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Layout ──────────────────────────────────────────────── */
+.cs-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.cs-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Editor toolbar */
+.cs-editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  padding: 0 14px;
+  background: #0f0f12;
+  border-bottom: 1px solid #1a1a22;
+  flex-shrink: 0;
+}
+
+.cs-editor-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #3a3a52;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cs-editor-breadcrumb span {
+  color: #505072;
+}
+
+.cs-editor-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-status-chip {
+  font-size: 10.5px;
+  color: #3a3a52;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cs-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+
+/* Editor wrap */
+.cs-editor-wrap {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  border-bottom: 1px solid #1a1a22;
+}
+
+/* ── Bottom panels ────────────────────────────────────────── */
+.cs-bottom-panels {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 280px;
+  border-top: 1px solid #1a1a22;
+}
+
+.cs-panel-tabs {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  background: #0c0c0f;
+  border-bottom: 1px solid #1a1a22;
+  padding: 0 8px;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cs-panel-tab {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 12px;
+  height: 100%;
+  font-size: 11.5px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #3a3a52;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 150ms;
+  white-space: nowrap;
+}
+
+.cs-panel-tab:hover {
+  color: #7070a0;
+}
+
+.cs-panel-tab.active {
+  color: #c0c0d8;
+  border-bottom-color: #6366f1;
+}
+
+.cs-panel-tab-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 4px #4ade8066;
+}
+
+.cs-panel-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Input panel */
+.cs-input-panel,
+.cs-output-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.cs-input-panel {
+  border-right: 1px solid #1a1a22;
+}
+
+.cs-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  height: 30px;
+  background: #0a0a0d;
+  border-bottom: 1px solid #141418;
+  flex-shrink: 0;
+}
+
+.cs-panel-header-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2e2e42;
+  font-family: inherit;
+}
+
+.cs-panel-header-hint {
+  font-size: 10px;
+  color: #222232;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cs-stdin-area {
+  flex: 1;
+  background: #09090c;
+  color: #8080a8;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  padding: 12px 16px;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cs-stdin-area::placeholder {
+  color: #222232;
+}
+
+/* Output / terminal panel */
+.cs-terminal-mac-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.cs-mac-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.cs-stdout-area {
+  flex: 1;
+  background: #09090c;
+  padding: 12px 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #a0e4b0;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  word-break: break-word;
+}
+
+.cs-stdout-placeholder {
+  color: #1e1e2e;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.cs-sidebar {
+  width: 224px;
+  flex-shrink: 0;
+  background: #0f0f12;
+  border-left: 1px solid #1a1a22;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cs-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #1a1a22;
+  flex-shrink: 0;
+}
+
+.cs-sidebar-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2e2e42;
+}
+
+.cs-sidebar-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6366f1;
+  background: #6366f114;
+  border: 1px solid #6366f122;
+  border-radius: 4px;
+  padding: 1px 7px;
+}
+
+.cs-user-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-user-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 8px;
+  border-radius: 8px;
+  transition: background 150ms;
+  min-width: 0;
+}
+
+.cs-user-card:hover {
+  background: #151520;
+}
+
+.cs-user-card.is-you {
+  background: #6366f10a;
+  border: 1px solid #6366f114;
+}
+
+.cs-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cs-avatar-pip {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  border: 1.5px solid #0f0f12;
+  box-shadow: 0 0 5px #4ade8055;
+}
+
+.cs-user-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cs-user-name {
+  font-size: 12.5px;
+  color: #b0b0c8;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.cs-user-tag {
+  font-size: 10px;
+  color: #3a3a52;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cs-user-tag.you {
+  color: #6366f1;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+.cs-sidebar ::-webkit-scrollbar,
+.cs-stdout-area::-webkit-scrollbar,
+.cs-stdin-area::-webkit-scrollbar { width: 4px; }
+
+.cs-sidebar ::-webkit-scrollbar-track,
+.cs-stdout-area::-webkit-scrollbar-track,
+.cs-stdin-area::-webkit-scrollbar-track { background: transparent; }
+
+.cs-sidebar ::-webkit-scrollbar-thumb,
+.cs-stdout-area::-webkit-scrollbar-thumb,
+.cs-stdin-area::-webkit-scrollbar-thumb {
+  background: #22222e;
+  border-radius: 99px;
+}
