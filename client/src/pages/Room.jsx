@@ -5,8 +5,8 @@ import api from "../api/axios";
 import Editor from "@monaco-editor/react";
 import "../styles/Room.css";
 
-const socket = io("http://localhost:5001");
-
+const socket = io(import.meta.env.VITE_SOCKET_URL);
+console.log("Socket URL:", import.meta.env.VITE_SOCKET_URL);
 const AVATAR_COLORS = [
   "#6366f1", "#ec4899", "#f59e0b",
   "#10b981", "#3b82f6", "#8b5cf6",
