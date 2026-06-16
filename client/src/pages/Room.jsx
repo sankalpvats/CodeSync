@@ -46,7 +46,7 @@ function Room() {
     console.log("Joining room:", roomId);
     const username = localStorage.getItem("username");
     socket.emit("join-room", { roomId, username });
-
+    socket.on("receive-output", (newOutput) => {setOutput(newOutput);});
     socket.on("receive-input",    (newInput)    => setInput(newInput));
     socket.on("receive-language", (newLanguage) => setLanguage(newLanguage));
     socket.on("receive-code",     (newCode)     => setCode(newCode));
@@ -60,6 +60,7 @@ function Room() {
       socket.off("room-users");
       socket.off("receive-language");
       socket.off("receive-input");
+      socket.off("receive-output");
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     };
   }, [roomId]);
@@ -86,6 +87,10 @@ function Room() {
     try {
       const res = await api.post("/code/run", { code, input, language });
       setOutput(res.data.output);
+      socket.emit("output-change", {
+  roomId,
+  output: res.data.output,
+});
     } catch (error) {
       console.error(error);
       setOutput("Execution Failed");

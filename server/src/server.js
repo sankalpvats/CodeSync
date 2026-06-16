@@ -74,6 +74,9 @@ socket.on(
     );
   }
 );
+socket.on("output-change", ({ roomId, output }) => {
+  socket.to(roomId).emit("receive-output", output);
+});
   socket.on("code-change", async ({ roomId, code }) => {
   try {
     socket.to(roomId).emit(
