@@ -6,7 +6,7 @@ const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
 
-const decoded = await firebase.auth.verifyIdToken(token);
+const decoded = await firebase.auth().verifyIdToken(token);
 
     const { email, name, picture, uid } = decoded;
 
@@ -34,11 +34,13 @@ const decoded = await firebase.auth.verifyIdToken(token);
       user,
     });
   } catch (err) {
-    console.log(err);
+    console.error("Google Login Error:");
+    console.error(err);
+
     res.status(401).json({
-      message: "Google authentication failed",
+        message: err.message,
     });
-  }
+}
 };
 
 const registerUser = async (req, res) => {
