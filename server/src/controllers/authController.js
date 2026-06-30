@@ -1,6 +1,46 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const firebase = require("../config/firebase");
+const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+const decoded = await firebase.auth.verifyIdToken(token);
+
+    const { email, name, picture, uid } = decoded;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        googleId: uid,
+        avatar: picture,
+      });
+    }
+
+    const jwtToken = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      token: jwtToken,
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(401).json({
+      message: "Google authentication failed",
+    });
+  }
+};
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -57,7 +97,11 @@ const loginUser = async (req, res) => {
       password,
       user.password
     );
-
+    if (!user.password) {
+    return res.status(400).json({
+        message: "Please sign in with Google."
+    });
+}
     if (!isMatch) {
       return res.status(400).json({
         message: "Invalid email or password",
@@ -96,4 +140,5 @@ const loginUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  googleLogin
 };

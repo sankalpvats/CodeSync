@@ -1,14 +1,16 @@
 const express = require("express");
+const router = express.Router();
 console.log("Auth Routes Loaded");
 const {
   registerUser,
   loginUser,
+  googleLogin,
 } = require("../controllers/authController");
 const protect = require("../middleware/authMiddleware");
-const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+router.post("/google", googleLogin);
 router.get("/test", (req, res) => {
   res.json({ message: "Auth routes working" });
 });

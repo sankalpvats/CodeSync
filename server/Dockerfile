@@ -1,4 +1,5 @@
-FROM node:22
+FROM node:20
+
 
 # Install Python, Java and C++
 RUN apt-get update && apt-get install -y \

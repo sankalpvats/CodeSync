@@ -7,6 +7,7 @@ const Room = require("./models/Room");
 const http = require("http");
 const codeRoutes = require("./routes/codeRoutes");
 const { Server } = require("socket.io");
+const aiRoutes = require("./routes/aiRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes after middleware
+app.use("/api/ai", aiRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/code", codeRoutes);

@@ -595,3 +595,81 @@
   background: #22222e;
   border-radius: 99px;
 }
+.cs-sidebar-tabs { display: flex; border-bottom: 1px solid #2a2a2a; }
+.cs-sidebar-tab {
+  flex: 1; padding: 12px; background: transparent; border: none; cursor: pointer;
+  color: #8b8b92; font-size: 13px; font-weight: 500;
+  border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+}
+.cs-sidebar-tab.active { color: #fff; background: #16161a; border-bottom-color: #6366f1; }
+.cs-sidebar-tab:hover:not(.active) { color: #c4c4ca; }
+
+.cs-ai-panel { display: flex; flex-direction: column; height: 100%; }
+.cs-ai-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.cs-ai-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px; background: #16161a; border: 1px solid #2a2a2a; border-radius: 8px;
+  color: #e2e2e5; font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.cs-ai-btn:hover:not(:disabled) { background: #1c1c20; border-color: #3a3a3a; }
+.cs-ai-btn:disabled { cursor: not-allowed; }
+.cs-ai-icon { font-size: 14px; }
+.cs-ai-icon-amber { color: #f59e0b; }
+.cs-ai-icon-blue  { color: #3b82f6; }
+.cs-ai-icon-red   { color: #ef4444; }
+.cs-ai-icon-green { color: #10b981; }
+
+.cs-ai-output {
+  flex: 1; margin: 0 12px 12px; padding: 14px; overflow-y: auto;
+  background: #16161a; border: 1px solid #2a2a2a; border-radius: 8px;
+  font-size: 13px; line-height: 1.7;
+}
+.cs-ai-placeholder, .cs-ai-loading { color: #6e6e76; }
+.cs-ai-error { color: #f87171; }
+.cs-ai-loading { display: flex; align-items: center; gap: 8px; }
+.cs-ai-spinner {
+  width: 13px; height: 13px; border: 2px solid #3a3a3a; border-top-color: #6366f1;
+  border-radius: 50%; animation: cs-spin .7s linear infinite;
+}
+@keyframes cs-spin { to { transform: rotate(360deg); } }
+
+.cs-ai-markdown { color: #d4d4d8; }
+.cs-ai-markdown p { margin: 0 0 10px; }
+.cs-ai-markdown code { background: #1f1f23; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+.cs-ai-markdown pre { background: #1f1f23; padding: 10px; border-radius: 6px; overflow-x: auto; }
+.cs-ai-markdown h1, .cs-ai-markdown h2, .cs-ai-markdown h3 { color: #fff; margin: 14px 0 6px; }
+.cs-ai-markdown ul, .cs-ai-markdown ol { padding-left: 18px; margin: 0 0 10px; }
+.cs-user-list { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
+.cs-user-empty { color: #6e6e76; font-size: 13px; padding: 16px; text-align: center; }
+
+.cs-user-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  transition: background .15s;
+}
+.cs-user-item:hover { background: #16161a; }
+.cs-user-item.you { background: #16161a; border: 0.5px solid #2a2a2a; }
+
+.cs-user-avatar-wrap { position: relative; flex-shrink: 0; }
+.cs-user-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #fff;
+}
+.cs-user-online-dot {
+  position: absolute; bottom: -1px; right: -1px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #10b981; border: 2px solid #0d0d0f;
+}
+
+.cs-user-name {
+  font-size: 13px; color: #e2e2e5; font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.cs-user-you-badge {
+  margin-left: auto; font-size: 11px; font-weight: 600;
+  color: #10b981; background: rgba(16,185,129,0.12);
+  padding: 2px 7px; border-radius: 99px; flex-shrink: 0;
+}

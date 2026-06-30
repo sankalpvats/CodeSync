@@ -4,9 +4,9 @@ import { io } from "socket.io-client";
 import api from "../api/axios";
 import Editor from "@monaco-editor/react";
 import "../styles/Room.css";
-
+import ReactMarkdown from "react-markdown";
+import { aiAction } from "../api/ai";
 const socket = io(import.meta.env.VITE_SOCKET_URL);
-console.log("Socket URL:", import.meta.env.VITE_SOCKET_URL);
 const AVATAR_COLORS = [
   "#6366f1", "#ec4899", "#f59e0b",
   "#10b981", "#3b82f6", "#8b5cf6",
@@ -17,6 +17,11 @@ const PANELS = ["input", "output"];
 function Room() {
   const { roomId } = useParams();
   const [output, setOutput]           = useState("");
+  const [review, setReview] = useState("");
+  const [loadingReview, setLoadingReview] = useState(false);
+  const [aiError, setAiError] = useState("");
+  const [activeAction, setActiveAction] = useState(null);
+  const [activeSidebar, setActiveSidebar] = useState("ai");
   const [input, setInput]             = useState("");
   const [code, setCode]               = useState("");
   const [users, setUsers]             = useState([]);
@@ -43,7 +48,6 @@ function Room() {
     };
 
     loadRoom();
-    console.log("Joining room:", roomId);
     const username = localStorage.getItem("username");
     socket.emit("join-room", { roomId, username });
     socket.on("receive-output", (newOutput) => {setOutput(newOutput);});
@@ -51,7 +55,6 @@ function Room() {
     socket.on("receive-language", (newLanguage) => setLanguage(newLanguage));
     socket.on("receive-code",     (newCode)     => setCode(newCode));
     socket.on("room-users",       (users)       => {
-      console.log("Received users:", users);
       setUsers(users);
     });
 
@@ -68,7 +71,6 @@ function Room() {
   /* ── save code (debounced 1s) ─────────────────────────── */
   const saveCode = async (newCode) => {
     try {
-      console.log("Saving to MongoDB...");
       const token = localStorage.getItem("token");
       await api.put(
         `/rooms/${roomId}/code`,
@@ -98,7 +100,25 @@ function Room() {
       setRunning(false);
     }
   };
+const handleAI = async (action) => {
+  if (!code.trim()) {
+    setAiError("Write some code first.");
+    return;
+  }
+  setLoadingReview(true);
+  setActiveAction(action);
+  setAiError("");
 
+  try {
+    const result = await aiAction(action, language, code);
+    setReview(result);
+  } catch (err) {
+    console.error(err);
+    setAiError(err.response?.data?.message || "AI request failed. Please try again.");
+  } finally {
+    setLoadingReview(false);
+  }
+};
   /* ── copy room link ───────────────────────────────────── */
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -179,6 +199,7 @@ function Room() {
               : <><span>▶</span> Run</>
             }
           </button>
+          
         </div>
       </nav>
 
@@ -282,31 +303,108 @@ function Room() {
 
         {/* ── Sidebar ──────────────────────────────────── */}
         <aside className="cs-sidebar">
-          <div className="cs-sidebar-header">
-            <span className="cs-sidebar-title">Collaborators</span>
-            <span className="cs-sidebar-count">{users.length}</span>
-          </div>
 
-          <div className="cs-user-list">
-            {users.map((user, i) => {
-              const isYou = user.username === currentUsername;
-              return (
-                <div key={user.socketId} className={`cs-user-card${isYou ? " is-you" : ""}`}>
-                  <div className="cs-avatar" style={{ background: AVATAR_COLORS[i % AVATAR_COLORS.length] }}>
-                    {user.username?.charAt(0).toUpperCase() ?? "?"}
-                    <span className="cs-avatar-pip" />
-                  </div>
-                  <div className="cs-user-info">
-                    <span className="cs-user-name">{user.username}</span>
-                    <span className={`cs-user-tag${isYou ? " you" : ""}`}>
-                      {isYou ? "you" : "online"}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </aside>
+  <div
+  style={{
+    display: "flex",
+    borderBottom: "1px solid #2a2a2a",
+  }}
+>
+  <button
+    style={{
+      flex: 1,
+      padding: "12px",
+      background: activeSidebar === "ai" ? "#1f2937" : "transparent",
+      color: "white",
+      border: "none",
+      cursor: "pointer",
+      fontWeight: 600,
+    }}
+    onClick={() => setActiveSidebar("ai")}
+  >
+    🤖 AI
+  </button>
+
+  <button
+    style={{
+      flex: 1,
+      padding: "12px",
+      background: activeSidebar === "members" ? "#1f2937" : "transparent",
+      color: "white",
+      border: "none",
+      cursor: "pointer",
+      fontWeight: 600,
+    }}
+    onClick={() => setActiveSidebar("members")}
+  >
+    👥 Members ({users.length})
+  </button>
+</div>
+
+  {activeSidebar === "ai" ? (
+  <div className="cs-ai-panel">
+    <div className="cs-ai-actions">
+      <button className="cs-ai-btn" onClick={() => handleAI("review")} disabled={loadingReview}
+        style={{ opacity: activeAction === "review" && loadingReview ? 0.5 : 1 }}>
+        <span className="cs-ai-icon cs-ai-icon-amber">★</span>Review
+      </button>
+      <button className="cs-ai-btn" onClick={() => handleAI("explain")} disabled={loadingReview}
+        style={{ opacity: activeAction === "explain" && loadingReview ? 0.5 : 1 }}>
+        <span className="cs-ai-icon cs-ai-icon-blue">▤</span>Explain
+      </button>
+      <button className="cs-ai-btn" onClick={() => handleAI("debug")} disabled={loadingReview}
+        style={{ opacity: activeAction === "debug" && loadingReview ? 0.5 : 1 }}>
+        <span className="cs-ai-icon cs-ai-icon-red">⚠</span>Debug
+      </button>
+      <button className="cs-ai-btn" onClick={() => handleAI("optimize")} disabled={loadingReview}
+        style={{ opacity: activeAction === "optimize" && loadingReview ? 0.5 : 1 }}>
+        <span className="cs-ai-icon cs-ai-icon-green">⚡</span>Optimize
+      </button>
+    </div>
+
+    <div className="cs-ai-output">
+      {loadingReview ? (
+        <div className="cs-ai-loading">
+          <span className="cs-ai-spinner" />Analyzing your code…
+        </div>
+      ) : aiError ? (
+        <p className="cs-ai-error">{aiError}</p>
+      ) : review ? (
+        <div className="cs-ai-markdown">
+          <ReactMarkdown>{review}</ReactMarkdown>
+        </div>
+      ) : (
+        <p className="cs-ai-placeholder">Choose an AI action above to get started.</p>
+      )}
+    </div>
+  </div>
+) : (
+  <div className="cs-user-list">
+  {users.length === 0 ? (
+    <p className="cs-user-empty">No members yet</p>
+  ) : (
+    users.map((user, index) => {
+      const isYou = user.username === currentUsername;
+      return (
+        <div key={user.socketId || index} className={`cs-user-item${isYou ? " you" : ""}`}>
+          <span className="cs-user-avatar-wrap">
+            <span className="cs-user-avatar" style={{ background: AVATAR_COLORS[index % AVATAR_COLORS.length] }}>
+              {user.username?.charAt(0).toUpperCase()}
+            </span>
+            <span className="cs-user-online-dot" />
+          </span>
+
+          <span className="cs-user-name">{user.username}</span>
+
+          {isYou && <span className="cs-user-you-badge">You</span>}
+        </div>
+      );
+    })
+  )}
+</div>
+)}
+
+</aside>
       </div>
     </div>
   );
