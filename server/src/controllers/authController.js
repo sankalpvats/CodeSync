@@ -1,12 +1,13 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const firebase = require("../config/firebase");
+require("../config/firebase");
+const { getAuth } = require("firebase-admin/auth");
 const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
 
-const decoded = await firebase.auth().verifyIdToken(token);
+const decoded = await  getAuth().verifyIdToken(token);
 
     const { email, name, picture, uid } = decoded;
 

@@ -9,4 +9,3 @@ initializeApp({
   }),
 });
 
-module.exports = admin;
