@@ -1,11 +1,16 @@
-const admin = require("firebase-admin");
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-  }),
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyDDC_5EmO8RK4W-EpleM_NJkjqC984284o",
+  authDomain: "codesync-773a3.firebaseapp.com",
+  projectId: "codesync-773a3",
+  storageBucket: "codesync-773a3.firebasestorage.app",
+  messagingSenderId: "479788547903",
+  appId: "1:479788547903:web:938970905ce4670af01d8a",
+};
 
-module.exports = admin;
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
