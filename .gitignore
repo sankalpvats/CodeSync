@@ -11,3 +11,4 @@ server/dist
 server/src/config/firebase-service-account.json
 .env
 src/config/codesync-773a3-firebase-adminsdk-fbsvc-6b15d975ad.json
+server/src/config/*.json
